@@ -11,7 +11,7 @@ AIObject::AIObject()
 	// Set origin at center
 	GetSprite().setOrigin(GetSprite().getLocalBounds().width/2, GetSprite().getLocalBounds().width/2);
 
-	SetPosition(10.0f, 10.0f);
+	//SetPosition(10.0f, 10.0f);
 
 	// Inherited from base class
 	_velocityX = 10.0f;
@@ -36,13 +36,12 @@ void AIObject::Update(float elapsedTime)
 
 	if(player != NULL)
 	{
-		sf::Vector2f playerPos = player->GetPosition();
-
 		sf::Rect<float> playerRect = player->GetBoundingRect();
 		if(playerRect.intersects(this->GetBoundingRect()))
 			std::cout << "AIObject intersects player\n";
 
 		sf::Vector2f pos = this->GetPosition();
+		sf::Vector2f playerPos = player->GetPosition();
 		float w = GetWidth();
 		float h = GetHeight();
 
@@ -51,19 +50,21 @@ void AIObject::Update(float elapsedTime)
 
 		sf::Sprite sprite = GetSprite();
 
-		sprite.move(10.0f, 10.0f);
-
 		if(playerPos.x - pos.x + moveByX < playerPos.x - pos.x)
 			sprite.move(moveByX, 0.0f);
 		else
-			sprite.move(-1.0f * moveByX, 0.0f);
+			sprite.move(- moveByX, 0.0f);
+			std::cout << moveByX << "\n";
+			std::cout << "AIObject: move negative X\n";
 		if(playerPos.y - pos.y + moveByY < playerPos.y - pos.y)
 			sprite.move(0.0f, moveByY);
 		else
-			sprite.move(0.0f, -1.0f * moveByY);
+			sprite.move(0.0f, - moveByY);
+			std::cout << "AIObject: move negative Y\n";
 
 		// Inherited from base class
 		LimitVelocity();
 		WallBounce();
+		//MoveSprite(elapsedTime);
 	}
 }

@@ -36,16 +36,12 @@ void Entity::Update(float elapsedTime)
 
 	if(player != NULL) // Dangerous if null!
 	{
-		LimitVelocity();
-		WallBounce();
-
-		float moveByX = _velocityX * elapsedTime; // Delta
-		float moveByY = _velocityY * elapsedTime; // Delta
-
 		sf::Rect<float> playerRect = player->GetBoundingRect();
 		if(playerRect.intersects(this->GetBoundingRect()))
 			std::cout << "Entity intersects player\n";
 
-		GetSprite().move(moveByX, moveByY);
+		LimitVelocity();
+		WallBounce();
+		MoveSprite(elapsedTime);
 	}
 }

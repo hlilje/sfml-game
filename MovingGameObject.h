@@ -25,4 +25,6 @@ protected:
 	virtual void LimitVelocity();
 	// Make the object change direction upon hitting walls
 	virtual void WallBounce();
+	// Moves the sprite with the given delta
+	virtual void MoveSprite(float elapsedTime);
 };

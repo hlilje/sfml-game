@@ -51,14 +51,8 @@ void PlayerObject::Update(float elapsedTime)
 		_velocityY += 10.0f;
 	}
 
-
 	// Protected inherited members of base class
 	LimitVelocity();
 	WallBounce();
-
-	float moveByX = _velocityX * elapsedTime;
-	float moveByY = _velocityY * elapsedTime;
-
-	// fps = 1 / delta
-	GetSprite().move(moveByX, moveByY);
+	MoveSprite(elapsedTime);
 }

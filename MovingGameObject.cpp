@@ -14,8 +14,12 @@ void MovingGameObject::LimitVelocity()
 {
 	if(_velocityX > _maxVelocity)
 		_velocityX = _maxVelocity;
+	else if(_velocityX < - _maxVelocity)
+		_velocityX = - _maxVelocity;
 	if(_velocityY > _maxVelocity)
 		_velocityY = _maxVelocity;
+	else if(_velocityY < - _maxVelocity)
+		_velocityY = - _maxVelocity;
 }
 
 void MovingGameObject::WallBounce()
@@ -51,4 +55,13 @@ float* MovingGameObject::GetVelocity() const
 {
 	float velocity[2] = {_velocityX, _velocityY};
 	return velocity;
+}
+
+void MovingGameObject::MoveSprite(float elapsedTime)
+{
+	float moveByX = _velocityX * elapsedTime;
+	float moveByY = _velocityY * elapsedTime;
+
+	// fps = 1 / delta
+	this->GetSprite().move(moveByX, moveByY);
 }
