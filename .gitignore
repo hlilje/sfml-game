@@ -1,0 +1,7 @@
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+resource.h
+*.aps
+Debug/
+targetver.h
