@@ -9,13 +9,14 @@ AIObject::AIObject()
 	assert(IsLoaded());
 
 	// Set origin at center
-	GetSprite().setOrigin(GetSprite().getLocalBounds().width/2, GetSprite().getLocalBounds().width/2);
+	GetSprite().setOrigin(GetSprite().getLocalBounds().width/2, GetSprite().getLocalBounds().height/2);
 
 	//SetPosition(10.0f, 10.0f);
 
 	// Inherited from base class
-	_velocityX = 10.0f;
-	_velocityY = 10.0f;
+	_velocityX = 0.0f;
+	_velocityY = 0.0f;
+	_maxVelocity = 400.0f;
 	_startPosSet = false;
 }
 
@@ -42,29 +43,44 @@ void AIObject::Update(float elapsedTime)
 
 		sf::Vector2f pos = this->GetPosition();
 		sf::Vector2f playerPos = player->GetPosition();
-		float w = GetWidth();
-		float h = GetHeight();
 
 		float moveByX = _velocityX * elapsedTime;
 		float moveByY = _velocityY * elapsedTime;
 
-		sf::Sprite sprite = GetSprite();
+		float velocityInc = 9.0f;
 
-		if(playerPos.x - pos.x + moveByX < playerPos.x - pos.x)
-			sprite.move(moveByX, 0.0f);
+		if(playerPos.x - pos.x < 0.0f)
+		{
+			//this->GetSprite().move(moveByX, 0.0f);
+			_velocityX -= velocityInc;
+		}
 		else
-			sprite.move(- moveByX, 0.0f);
-			std::cout << moveByX << "\n";
-			std::cout << "AIObject: move negative X\n";
-		if(playerPos.y - pos.y + moveByY < playerPos.y - pos.y)
-			sprite.move(0.0f, moveByY);
+		{
+			//this->GetSprite().move(- moveByX, 0.0f);
+			_velocityX += velocityInc;
+		}
+		if(abs(playerPos.x - pos.x) < 1.0f)
+		{
+			_velocityX = 0.0f;
+		}
+		if(playerPos.y - pos.y < 0.0f)
+		{
+			//this->GetSprite().move(0.0f, moveByY);
+			_velocityY -= velocityInc;
+		}
 		else
-			sprite.move(0.0f, - moveByY);
-			std::cout << "AIObject: move negative Y\n";
+		{
+			//this->GetSprite().move(0.0f, - moveByY);
+			_velocityY += velocityInc;
+		}
+		if(abs(playerPos.y - pos.y) < 1.0f)
+		{
+			_velocityY = 0.0f;
+		}
 
 		// Inherited from base class
 		LimitVelocity();
 		WallBounce();
-		//MoveSprite(elapsedTime);
+		MoveSprite(elapsedTime);
 	}
 }

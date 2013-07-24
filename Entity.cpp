@@ -9,7 +9,7 @@ Entity::Entity():
 	Load("img/entity.png");
 	assert(IsLoaded());
 
-	GetSprite().setOrigin(GetSprite().getTextureRect().width/2, GetSprite().getTextureRect().height/2);
+	GetSprite().setOrigin(GetSprite().getLocalBounds().width/2, GetSprite().getLocalBounds().height/2);
 
 	// Inherited
 	_velocityX = 400.0f; // px/s
