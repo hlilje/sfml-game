@@ -59,10 +59,10 @@ void AIObject::Update(float elapsedTime)
 			//this->GetSprite().move(- moveByX, 0.0f);
 			_velocityX += velocityInc;
 		}
-		if(abs(playerPos.x - pos.x) < 1.0f)
-		{
-			_velocityX = 0.0f;
-		}
+		//if(abs(playerPos.x - pos.x) < 1.0f)
+		//{
+		//	_velocityX = 0.0f;
+		//}
 		if(playerPos.y - pos.y < 0.0f)
 		{
 			//this->GetSprite().move(0.0f, moveByY);
@@ -73,10 +73,10 @@ void AIObject::Update(float elapsedTime)
 			//this->GetSprite().move(0.0f, - moveByY);
 			_velocityY += velocityInc;
 		}
-		if(abs(playerPos.y - pos.y) < 1.0f)
-		{
-			_velocityY = 0.0f;
-		}
+		//if(abs(playerPos.y - pos.y) < 1.0f)
+		//{
+		//	_velocityY = 0.0f;
+		//}
 
 		// Inherited from base class
 		LimitVelocity();

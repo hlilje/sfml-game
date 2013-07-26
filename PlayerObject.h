@@ -3,7 +3,6 @@
 #pragma once
 #include "MovingGameObject.h"
 
-//class PlayerObject: public VisibleGameObject // Only derive public members
 class PlayerObject: public MovingGameObject // Only derive protected members
 {
 public:

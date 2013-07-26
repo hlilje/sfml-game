@@ -20,6 +20,11 @@ protected:
 	float _velocityY;
 	float _maxVelocity;
 
+	float _movedLeft;
+	float _movedRight;
+	float _movedUp;
+	float _movedDown;
+
 	// TODO Should these be virtual?
 	// Sets the velocity to max velocity were it to exceed it
 	virtual void LimitVelocity();
@@ -27,4 +32,6 @@ protected:
 	virtual void WallBounce();
 	// Moves the sprite with the given delta
 	virtual void MoveSprite(float elapsedTime);
+	// Collision detection
+	virtual void DetectCollision();
 };

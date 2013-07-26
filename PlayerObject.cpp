@@ -18,6 +18,11 @@ PlayerObject::PlayerObject()
 	_velocityY = 0.0f;
 	_maxVelocity = 500.0f;
 	_startPosSet = false;
+
+	_movedLeft = false;
+	_movedRight = false;
+	_movedUp = false;
+	_movedDown = false;
 }
 
 PlayerObject::~PlayerObject()
@@ -39,23 +44,31 @@ void PlayerObject::Update(float elapsedTime)
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		_velocityX -= velocityInc;
+		_movedLeft = true;
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		_velocityX += velocityInc;
+		_movedRight = true;
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		_velocityY -= velocityInc;
+		_movedUp = true;
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		_velocityY += velocityInc;
+		_movedDown = true;
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		_velocityX = 0.0f;
 		_velocityY = 0.0f;
+		_movedLeft = false;
+		_movedRight = false;
+		_movedUp = false;
+		_movedDown = false;
 	}
 
 	// Protected inherited members of base class

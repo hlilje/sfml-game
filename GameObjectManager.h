@@ -30,7 +30,7 @@ private:
 	// A class type functor
 	struct GameObjectDeallocator
 	{
-		void operator()(const std::pair<std::string,VisibleGameObject*> & p) const
+		void operator()(const std::pair<std::string, VisibleGameObject*> & p) const
 		{
 			delete p.second;
 		}
