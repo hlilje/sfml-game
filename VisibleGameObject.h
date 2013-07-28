@@ -24,14 +24,26 @@ public:
 	// detection.
 	virtual sf::Rect<float> GetBoundingRect() const;
 
+	// Add an object to the vector of objects currelty colliding with this
+	virtual void AddCollidingObject(VisibleGameObject*);
+
 protected:
 	bool _startPosSet;
 	sf::Sprite& GetSprite();
+	std::set<VisibleGameObject*> _collidesWith; // Holds all the objects currently colliding with this
 
 	// Hack to get around the fact that you can't seem to just call SetPosition()
 	// in the constructor, this method sets the flag _startPosSet to true after
 	// setting the given coordinates.
 	virtual void SetStartPos(float x, float y);
+
+	// Delete a colliding object from the object set
+	virtual void RemoveCollidingObject(VisibleGameObject*);
+
+	// Currently not implemented, but handles collisions in a way which
+	// makes sense for both moving and stationary objects
+	virtual void HandleVisualCollisions();
+
 private:
 	// Could make this protected and remove GetSprite() for simplicity
 	sf::Sprite _sprite;

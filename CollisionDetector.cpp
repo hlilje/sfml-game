@@ -9,8 +9,14 @@ CollisionDetector::~CollisionDetector()
 {
 }
 
-// TODO
-void CollisionDetector::AddVisibleObject(std::string name, VisibleGameObject* gameObject)
+bool CollisionDetector::DetectCollision(VisibleGameObject* obj1, VisibleGameObject* obj2)
 {
-	_obsticles.insert(std::pair<std::string, VisibleGameObject*>(name, gameObject));
+	bool collides = false;
+
+	if(obj1->GetBoundingRect().intersects(obj2->GetBoundingRect()))
+	{
+		collides = true;
+	}
+
+	return collides;
 }

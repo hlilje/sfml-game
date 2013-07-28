@@ -33,6 +33,7 @@ void Entity::Update(float elapsedTime)
 	// of the inheriting class.
 	// Overkill in this case since those methods aren't used.
 	PlayerObject* player = dynamic_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
+	AIObject* ai = dynamic_cast<AIObject*>(Game::GetGameObjectManager().Get("AI"));
 
 	if(player != NULL) // Dangerous if null!
 	{
@@ -40,8 +41,13 @@ void Entity::Update(float elapsedTime)
 		if(playerRect.intersects(this->GetBoundingRect()))
 			std::cout << "Entity intersects player\n";
 
+		sf::Rect<float> aiRect = ai->GetBoundingRect();
+		if(aiRect.intersects(this->GetBoundingRect()))
+			std::cout << "Entity intersects AI\n";
+
 		LimitVelocity();
 		WallBounce();
+		HandleMovingCollisions(); // TODO Make this work for AI vs Entity
 		MoveSprite(elapsedTime);
 	}
 }

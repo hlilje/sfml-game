@@ -4,6 +4,8 @@
 
 #pragma once
 #include "VisibleGameObject.h"
+#include "MovingGameObject.h"
+#include "CollisionDetector.h"
 
 class GameObjectManager
 {
@@ -20,10 +22,14 @@ public:
 	void DrawAll(sf::RenderWindow& renderWindow);
 	void UpdateAll();
 
+	// Uses CollisionDetector to decide if a collision happened and updates
+	// each object's collision map
+	void CheckAllCollisions();
+
 private:
 	std::map<std::string, VisibleGameObject*> _gameObjects;
-
 	sf::Clock clock;
+	CollisionDetector* _collDect;
 
 	// A functor, an object that can be called like a function
 	// Overloads function operator ()

@@ -83,6 +83,7 @@ void Game::GameLoop()
 		_mainWindow.clear(sf::Color::Black); // Must be called before drawing
 
 		_gameObjectManager.UpdateAll();
+		_gameObjectManager.CheckAllCollisions();
 		_gameObjectManager.DrawAll(_mainWindow);
 
 		_mainWindow.display(); // End the current frame
@@ -93,14 +94,14 @@ void Game::GameLoop()
 			{
 			case sf::Event::Closed:
 				_gameState = Game::Exiting;
-				std::cout << "Closed event event\n";
+				//std::cout << "Closed event event\n"; // DEBUG
 				break;
 			case sf::Event::KeyPressed:
-				std::cout << "Key pressed event\n";
+				//std::cout << "Key pressed event\n"; // DEBUG
 				if(currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
 				break;
 			default: // Don't handle other type of events
-				std::cout << "Default event case\n";
+				//std::cout << "Default event case\n"; // DEBUG
 				break;
 			}
 			break; // Break game state switch

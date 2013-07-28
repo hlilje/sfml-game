@@ -32,6 +32,8 @@ protected:
 	virtual void WallBounce();
 	// Moves the sprite with the given delta
 	virtual void MoveSprite(float elapsedTime);
-	// Collision detection
-	virtual void DetectCollision();
+	// Handle and delete objects stored in the collision set.
+	// There is no equivalent for VisibleGameObject, since the
+	// logic for collisions with stationary objects differs.
+	virtual void HandleMovingCollisions();
 };

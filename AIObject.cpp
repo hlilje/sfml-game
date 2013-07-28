@@ -37,15 +37,11 @@ void AIObject::Update(float elapsedTime)
 
 	if(player != NULL)
 	{
-		sf::Rect<float> playerRect = player->GetBoundingRect();
-		if(playerRect.intersects(this->GetBoundingRect()))
-			std::cout << "AIObject intersects player\n";
-
 		sf::Vector2f pos = this->GetPosition();
 		sf::Vector2f playerPos = player->GetPosition();
 
-		float moveByX = _velocityX * elapsedTime;
-		float moveByY = _velocityY * elapsedTime;
+		//float moveByX = _velocityX * elapsedTime;
+		//float moveByY = _velocityY * elapsedTime;
 
 		float velocityInc = 9.0f;
 
@@ -81,6 +77,7 @@ void AIObject::Update(float elapsedTime)
 		// Inherited from base class
 		LimitVelocity();
 		WallBounce();
+		HandleMovingCollisions();
 		MoveSprite(elapsedTime);
 	}
 }

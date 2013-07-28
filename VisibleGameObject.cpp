@@ -41,7 +41,7 @@ void VisibleGameObject::Update(float elapsedTime)
 
 void VisibleGameObject::SetPosition(float x, float y)
 {
-	std::cout << "SetPosition\n"; // DEBUG
+	//std::cout << "SetPosition\n"; // DEBUG
 
 	if(_isLoaded)
 	{
@@ -90,4 +90,29 @@ void VisibleGameObject::SetStartPos(float x, float y)
 		SetPosition(x, y);
 		_startPosSet = true;
 	}
+}
+
+void VisibleGameObject::AddCollidingObject(VisibleGameObject* obj)
+{
+	std::set<VisibleGameObject*>::iterator it = _collidesWith.find(obj);
+	if(it == _collidesWith.end()) // Returns end if no match is found
+	{
+		std::cout << "AddCollidingObject: INSERT\n"; // DEBUG
+		_collidesWith.insert(obj);
+	}
+}
+
+void VisibleGameObject::RemoveCollidingObject(VisibleGameObject* obj)
+{
+	std::set<VisibleGameObject*>::iterator it = _collidesWith.find(obj);
+	if(it != _collidesWith.end()) // Returns end if no match is found
+	{
+		std::cout << "AddCollidingObject: REMOVE\n"; // DEBUG
+		_collidesWith.erase(obj);
+	}
+}
+
+void VisibleGameObject::HandleVisualCollisions()
+{
+	// TODO Not implemented
 }
