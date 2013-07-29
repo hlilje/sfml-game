@@ -49,6 +49,12 @@ void VisibleGameObject::SetPosition(float x, float y)
 	}
 }
 
+void VisibleGameObject::CenterOrigo()
+{
+	_sprite.setOrigin(_sprite.getLocalBounds().width/2,
+		_sprite.getLocalBounds().height/2);
+}
+
 sf::Vector2f VisibleGameObject::GetPosition() const
 {
 	if(_isLoaded)

@@ -1,4 +1,4 @@
-// Handles collision detection
+// Handles collision detection.
 
 #pragma once
 #include "VisibleGameObject.h"
@@ -12,8 +12,6 @@ public:
 
 	// Detects a collision between two given visible objects
 	bool DetectCollision(VisibleGameObject*, VisibleGameObject*);
-
-	// TODO Move methods here?
 
 private:
 

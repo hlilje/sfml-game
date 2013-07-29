@@ -8,8 +8,7 @@ PlayerObject::PlayerObject()
 	Load("img/object.png");
 	assert(IsLoaded()); // Can't return false in constructor
 
-	// Set new origin to center, default is top left
-	GetSprite().setOrigin(GetSprite().getLocalBounds().width/2, GetSprite().getLocalBounds().height/2);
+	CenterOrigo();
 	//SetPosition(200, 200); // Doesn't work
 
 	// Inherited

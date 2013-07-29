@@ -83,6 +83,7 @@ void GameObjectManager::CheckAllCollisions() {
 			{
 				//std::cout << "CheckAllCollisions: Same obj\n"; // DEBUG
 				subItr++;
+				continue; // Continue since we didn't get obj2
 			}
 			else
 			{
@@ -90,15 +91,7 @@ void GameObjectManager::CheckAllCollisions() {
 				obj2 = subItr->second;
 				subItr++;
 			}
-		}
 
-		//std::cout << "CheckAllCollisions: Reset subItr\n";
-		subItr = _gameObjects.begin(); // Start again for next object
-
-		// We must have at least one obj1 if we got here, but need check for obj2
-		if(obj2 != NULL)
-		{
-			//std::cout << "CheckAllCollisions: Obj2 not NULL\n"; // DEBUG
 			if(_collDect->DetectCollision(obj1, obj2)) // See if they collide
 			{
 				std::cout << "CheckAllCollisions: Collision!\n"; // DEBUG
@@ -106,6 +99,10 @@ void GameObjectManager::CheckAllCollisions() {
 				obj2->AddCollidingObject(obj1);
 			}
 		}
+
+		//std::cout << "CheckAllCollisions: Reset subItr\n";
+		subItr = _gameObjects.begin(); // Start again for next object
+
 		itr++;
 	}
 }

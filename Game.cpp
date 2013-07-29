@@ -38,9 +38,13 @@ void Game::Start(void)
 	Entity *entity = new Entity();
 	entity->SetPosition((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2) - 15);
 
+	GoalHole *goalHole = new GoalHole();
+	goalHole->SetPosition((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2));
+
 	_gameObjectManager.Add("Player", player);
 	_gameObjectManager.Add("AI", ai);
 	_gameObjectManager.Add("Entity", entity);
+	_gameObjectManager.Add("GoalHole", goalHole);
 
 	_gameState= Game::ShowingSplash;
 
