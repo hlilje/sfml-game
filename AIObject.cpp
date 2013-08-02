@@ -14,7 +14,6 @@ AIObject::AIObject()
 	_velocityX = 0.0f;
 	_velocityY = 0.0f;
 	_maxVelocity = 400.0f;
-	_startPosSet = false;
 }
 
 AIObject::~AIObject()
@@ -28,7 +27,6 @@ void AIObject::Draw(sf::RenderWindow& rw)
 
 void AIObject::Update(float elapsedTime)
 {
-	SetStartPos(500.0f, 500.0f);
 	// Would be more efficient to store pointer then to retrieve it every frame
 	const PlayerObject* player = static_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
 

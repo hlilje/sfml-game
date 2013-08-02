@@ -5,6 +5,7 @@
 #include "AIObject.h"
 #include "Entity.h"
 #include "GoalHole.h"
+#include "Obstacle.h"
 #include "GameObjectManager.h"
 
 // This class is entirely static, but a dynamic RenderWindow is created

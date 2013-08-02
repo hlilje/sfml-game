@@ -15,7 +15,6 @@ Entity::Entity():
 	_velocityX = 400.0f; // px/s
 	_velocityY = 400.0f; // px/s
 	_maxVelocity = 400.0f;
-	_startPosSet = false;
 }
 
 Entity::~Entity()
@@ -24,7 +23,6 @@ Entity::~Entity()
 
 void Entity::Update(float elapsedTime)
 {
-	SetStartPos(Game::SCREEN_WIDTH/2, Game::SCREEN_HEIGHT/2);
 	_elapsedTimeSinceStart += elapsedTime;
 
 	// Dynamic cast returns null if the object isn't capable of being casted to that type,
@@ -47,7 +45,7 @@ void Entity::Update(float elapsedTime)
 
 		LimitVelocity();
 		WallBounce();
-		HandleMovingCollisions(); // TODO Make this work for AI vs Entity
+		HandleMovingCollisions();
 		MoveSprite(elapsedTime);
 	}
 }

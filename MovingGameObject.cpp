@@ -70,8 +70,8 @@ void MovingGameObject::MoveSprite(float elapsedTime)
 	}
 	else if(_velocityX > 0)
 	{
-		_movedRight = true;
 		_movedLeft = false;
+		_movedRight = true;
 	}
 	else if(_velocityX == 0)
 	{
@@ -85,8 +85,8 @@ void MovingGameObject::MoveSprite(float elapsedTime)
 	}
 	else if(_velocityY > 0)
 	{
-		_movedUp = true;
-		_movedDown = false;
+		_movedUp = false;
+		_movedDown = true;
 	}
 	else if(_velocityY == 0)
 	{
@@ -103,14 +103,57 @@ void MovingGameObject::HandleMovingCollisions()
 	std::set<VisibleGameObject*>::iterator it = _collidesWith.begin();
 	while(it != _collidesWith.end())
 	{
+		// Don't do anything if you collide with the goal
+		if(dynamic_cast<GoalHole*> (*it) != NULL)
+		{
+			_collidesWith.erase(*it++);
+			continue;
+		}
+
+		// Coordinate info needed to be able to reset the object when
+		// it overlaps the other
+		sf::Vector2f collPos = (*it)->GetPosition();
+		sf::Vector2f thisPos = GetPosition();
+
+		sf::Rect<float> collRect = (*it)->GetBoundingRect();
+		sf::Rect<float> thisRect = GetBoundingRect();
+
+		float collRSide = collRect.left + collRect.width;
+		float collLSide = collRect.left;
+		float collUSide = collRect.top;
+		float collDSide = collRect.top + collRect.height;
+
+		float thisRSide = thisRect.left + thisRect.width;
+		float thisLSide = thisRect.left;
+		float thisUSide = thisRect.top;
+		float thisDSide = thisRect.top + thisRect.height;
+
 		// Flip direction upon collision
-		if(_movedLeft || _movedRight)
+		// Doesn't handle moving obj collision with stationary moving obj
+		// TODO
+		if(_movedLeft)
 		{
 			_velocityX = - _velocityX;
+			//if(thisLSide < collRSide)
+			//	SetPosition(thisPos.x + (collRSide - thisLSide), thisPos.y);
 		}
-		if(_movedUp || _movedDown)
+		else if(_movedRight)
+		{
+			_velocityX = - _velocityX;
+			//if(thisRSide > collLSide)
+			//	SetPosition(thisPos.x - (thisRSide - collLSide), thisPos.y);
+		}
+		if(_movedUp)
 		{
 			_velocityY = - _velocityY;
+			//if(thisDSide > collUSide)
+			//	SetPosition(thisPos.x, thisPos.y - (thisDSide - collUSide));
+		}
+		else if(_movedDown)
+		{
+			_velocityY = - _velocityY;
+			//if(thisUSide < collDSide)
+			//	SetPosition(thisPos.x, thisPos.y + (collDSide - thisUSide));
 		}
 
 		// The increment returns the previous value, which is the one to delete

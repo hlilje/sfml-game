@@ -9,13 +9,11 @@ PlayerObject::PlayerObject()
 	assert(IsLoaded()); // Can't return false in constructor
 
 	CenterOrigo();
-	//SetPosition(200, 200); // Doesn't work
 
 	// Inherited
 	_velocityX = 0.0f;
 	_velocityY = 0.0f;
 	_maxVelocity = 500.0f;
-	_startPosSet = false;
 
 	_movedLeft = false;
 	_movedRight = false;
@@ -34,8 +32,6 @@ void PlayerObject::Draw(sf::RenderWindow& rw)
 
 void PlayerObject::Update(float elapsedTime)
 {
-	SetStartPos(200.0f, 200.0f); // Inherited
-
 	float velocityInc = 10.0f; // Pixels
 
 	// Use polling instead of event

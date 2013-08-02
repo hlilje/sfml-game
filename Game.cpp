@@ -29,22 +29,27 @@ void Game::Start(void)
 	ServiceLocator::RegisterServiceLocator(&soundProvider);
 	ServiceLocator::GetAudio()->PlaySong("audio/soundtrack.ogg", true);
 
+	// Here we also set the start position
 	PlayerObject *player = new PlayerObject();
-	player->SetPosition((SCREEN_WIDTH/2), 700);
+	player->SetPosition(200.0f, 200.0f);
 
 	AIObject *ai = new AIObject();
-	ai->SetPosition((SCREEN_WIDTH/2), 40);
+	ai->SetPosition(500.0f, 500.0f);
 
 	Entity *entity = new Entity();
-	entity->SetPosition((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2) - 15);
+	entity->SetPosition(Game::SCREEN_WIDTH - 300.0f, 100.0f);
 
 	GoalHole *goalHole = new GoalHole();
 	goalHole->SetPosition((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2));
+
+	Obstacle *obstacle1 = new Obstacle();
+	obstacle1->SetPosition((SCREEN_WIDTH/2) + 300.0f, (SCREEN_HEIGHT/2) + 300.0f);
 
 	_gameObjectManager.Add("Player", player);
 	_gameObjectManager.Add("AI", ai);
 	_gameObjectManager.Add("Entity", entity);
 	_gameObjectManager.Add("GoalHole", goalHole);
+	_gameObjectManager.Add("Obstacle1", obstacle1);
 
 	_gameState= Game::ShowingSplash;
 

@@ -89,15 +89,6 @@ sf::Rect<float> VisibleGameObject::GetBoundingRect() const
 	return _sprite.getGlobalBounds();
 }
 
-void VisibleGameObject::SetStartPos(float x, float y)
-{
-	if(!_startPosSet)
-	{
-		SetPosition(x, y);
-		_startPosSet = true;
-	}
-}
-
 void VisibleGameObject::AddCollidingObject(VisibleGameObject* obj)
 {
 	std::set<VisibleGameObject*>::iterator it = _collidesWith.find(obj);

@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "GoalHole.h"
+#include "Obstacle.h"
 #include "Game.h"
 
-GoalHole::GoalHole()
+Obstacle::Obstacle()
 {
 	Load("img/object.png");
 	assert(IsLoaded());
@@ -10,11 +10,11 @@ GoalHole::GoalHole()
 	CenterOrigo();
 }
 
-GoalHole::~GoalHole()
+Obstacle::~Obstacle()
 {
 }
 
-void GoalHole::Update(float elapsedTime)
+void Obstacle::Update(float elapsedTime)
 {
 	PlayerObject* player = dynamic_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
 
@@ -22,6 +22,6 @@ void GoalHole::Update(float elapsedTime)
 	{
 		sf::Rect<float> playerRect = player->GetBoundingRect();
 		if(playerRect.intersects(this->GetBoundingRect()))
-			std::cout << "GoalHole intersects player\n";
+			std::cout << "Obstacle intersects player\n";
 	}
 }

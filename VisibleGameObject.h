@@ -28,17 +28,11 @@ public:
 	virtual void AddCollidingObject(VisibleGameObject*);
 
 protected:
-	bool _startPosSet;
 	sf::Sprite& GetSprite();
 	std::set<VisibleGameObject*> _collidesWith; // Holds all the objects currently colliding with this
 
 	// Set new origin to center, default is top left
 	virtual void CenterOrigo();
-
-	// Hack to get around the fact that you can't seem to just call SetPosition()
-	// in the constructor, this method sets the flag _startPosSet to true after
-	// setting the given coordinates.
-	virtual void SetStartPos(float x, float y);
 
 	// Delete a colliding object from the object set
 	virtual void RemoveCollidingObject(VisibleGameObject*);
