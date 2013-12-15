@@ -1,4 +1,4 @@
-SFMLGame - Working Title
+SFMLGame (Working Title)
 ========================
 
 BSD 2-Clause License
