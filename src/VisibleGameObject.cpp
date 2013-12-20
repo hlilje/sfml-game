@@ -109,7 +109,13 @@ void VisibleGameObject::RemoveCollidingObject(VisibleGameObject* obj)
 	}
 }
 
+// TODO Implement
 void VisibleGameObject::HandleVisualCollisions()
 {
-	// TODO Not implemented
+	std::set<VisibleGameObject*>::iterator it = _collidesWith.begin();
+	while(it != _collidesWith.end())
+	{
+		RemoveCollidingObject(*it++);
+		std::cout << "HandleVisualCollisions: Collision" << std::endl; // DEBUG
+	}
 }

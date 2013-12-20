@@ -24,4 +24,6 @@ void Obstacle::Update(float elapsedTime)
 		if(playerRect.intersects(this->GetBoundingRect()))
 			std::cout << "Obstacle intersects player\n";
 	}
+
+	//HandleVisualCollisions(); // TODO
 }

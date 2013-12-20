@@ -106,8 +106,14 @@ void MovingGameObject::HandleMovingCollisions()
 		// Don't do anything if you collide with the goal
 		if(dynamic_cast<GoalHole*> (*it) != NULL)
 		{
-			_collidesWith.erase(*it++);
+            RemoveCollidingObject(*it++);
 			continue;
+		}
+
+		if(dynamic_cast<Obstacle*> (*it) != NULL)
+		{
+            RemoveCollidingObject(*it++);
+			std::cout << "Collides with Obstacle" << std::endl; // DEBUG
 		}
 
 		// Coordinate info needed to be able to reset the object when
@@ -157,8 +163,7 @@ void MovingGameObject::HandleMovingCollisions()
 		}
 
 		// The increment returns the previous value, which is the one to delete
-		// Dereference iterator to get pointer value
-		_collidesWith.erase(*it++);
+		RemoveCollidingObject(*it++);
 		std::cout << "HandleMovingCollisions: Loop, left: " << _movedLeft << ", up: " << _movedUp << "\n"; // DEBUG
 	}
 }
