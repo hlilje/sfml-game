@@ -3,7 +3,6 @@
 #pragma once
 #include "MovingGameObject.h"
 
-//class AIObject: public VisibleGameObject
 class AIObject: public MovingGameObject
 {
 public:

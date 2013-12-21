@@ -11,7 +11,7 @@ Game::GameState Game::_gameState = Uninitialized; // Since it has no constructor
 sf::RenderWindow Game::_mainWindow;
 GameObjectManager Game::_gameObjectManager;
 
-// Start function, never call this more than once.
+// Start function, never call this more than once
 void Game::Start(void)
 {
 	// Check to make sure we only call this function once
@@ -29,7 +29,7 @@ void Game::Start(void)
 	ServiceLocator::RegisterServiceLocator(&soundProvider);
 	ServiceLocator::GetAudio()->PlaySong("audio/soundtrack.ogg", true);
 
-	// Here we also set the start position
+	// Also set start position
 	PlayerObject *player = new PlayerObject();
 	player->SetPosition(200.0f, 200.0f);
 
@@ -103,17 +103,14 @@ void Game::GameLoop()
 			{
 			case sf::Event::Closed:
 				_gameState = Game::Exiting;
-				//std::cout << "Closed event event\n"; // DEBUG
 				break;
 			case sf::Event::KeyPressed:
-				//std::cout << "Key pressed event\n"; // DEBUG
 				if(currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
 				break;
 			default: // Don't handle other type of events
-				//std::cout << "Default event case\n"; // DEBUG
 				break;
 			}
-			break; // Break game state switch
+			break;
 		}
 	}
 }

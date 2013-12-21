@@ -41,8 +41,6 @@ void VisibleGameObject::Update(float elapsedTime)
 
 void VisibleGameObject::SetPosition(float x, float y)
 {
-	//std::cout << "SetPosition\n"; // DEBUG
-
 	if(_isLoaded)
 	{
 		_sprite.setPosition(x, y);
@@ -94,7 +92,6 @@ void VisibleGameObject::AddCollidingObject(VisibleGameObject* obj)
 	std::set<VisibleGameObject*>::iterator it = _collidesWith.find(obj);
 	if(it == _collidesWith.end()) // Returns end if no match is found
 	{
-		std::cout << "AddCollidingObject: INSERT\n"; // DEBUG
 		_collidesWith.insert(obj);
 	}
 }
@@ -102,20 +99,30 @@ void VisibleGameObject::AddCollidingObject(VisibleGameObject* obj)
 void VisibleGameObject::RemoveCollidingObject(VisibleGameObject* obj)
 {
 	std::set<VisibleGameObject*>::iterator it = _collidesWith.find(obj);
-	if(it != _collidesWith.end()) // Returns end if no match is found
+	if(it != _collidesWith.end())
 	{
-		std::cout << "AddCollidingObject: REMOVE\n"; // DEBUG
 		_collidesWith.erase(obj);
 	}
 }
 
-// TODO Implement
 void VisibleGameObject::HandleVisualCollisions()
 {
 	std::set<VisibleGameObject*>::iterator it = _collidesWith.begin();
 	while(it != _collidesWith.end())
 	{
 		RemoveCollidingObject(*it++);
-		std::cout << "HandleVisualCollisions: Collision" << std::endl; // DEBUG
 	}
+}
+
+bool VisibleGameObject::OnTarget(sf::Vector2f target, float tolerance)
+{
+	if (tolerance <= 0.0f) { tolerance = 1.0f; }
+	sf::Vector2f thisPos = GetPosition();
+
+	if (abs(thisPos.x - target.x) < tolerance && abs(thisPos.y - target.y) < tolerance)
+	{
+		return true;
+	}
+
+	return false;
 }

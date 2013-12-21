@@ -9,9 +9,7 @@
 #include "stdafx.h"
 #include "Game.h"
 
-// Windows native main function that supports Unicode.
-// Compiler setup includes settings for standard main() to allow other
-// environments.
+// Windows native main function that supports Unicode
 int _tmain(int argc, _TCHAR* argv[])
 {
 	Game::Start();

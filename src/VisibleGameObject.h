@@ -37,9 +37,11 @@ protected:
 	// Delete a colliding object from the object set
 	virtual void RemoveCollidingObject(VisibleGameObject*);
 
-	// Currently not implemented, but handles collisions in a way which
-	// makes sense for both moving and stationary objects
+    // TODO Handle collisions relevant for a visual object
 	virtual void HandleVisualCollisions();
+
+    // True if this object is within the given tolerance of the given target position
+	virtual bool VisibleGameObject::OnTarget(sf::Vector2f target, float tolerance);
 
 private:
 	// Could make this protected and remove GetSprite() for simplicity

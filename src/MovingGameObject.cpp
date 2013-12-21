@@ -103,19 +103,6 @@ void MovingGameObject::HandleMovingCollisions()
 	std::set<VisibleGameObject*>::iterator it = _collidesWith.begin();
 	while(it != _collidesWith.end())
 	{
-		// Don't do anything if you collide with the goal
-		if(dynamic_cast<GoalHole*> (*it) != NULL)
-		{
-            RemoveCollidingObject(*it++);
-			continue;
-		}
-
-		if(dynamic_cast<Obstacle*> (*it) != NULL)
-		{
-            RemoveCollidingObject(*it++);
-			std::cout << "Collides with Obstacle" << std::endl; // DEBUG
-		}
-
 		// Coordinate info needed to be able to reset the object when
 		// it overlaps the other
 		sf::Vector2f collPos = (*it)->GetPosition();
@@ -133,6 +120,16 @@ void MovingGameObject::HandleMovingCollisions()
 		float thisLSide = thisRect.left;
 		float thisUSide = thisRect.top;
 		float thisDSide = thisRect.top + thisRect.height;
+
+		if(dynamic_cast<GoalHole*> (*it) != NULL) // Victory condition
+		{
+			if (OnTarget((*it)->GetPosition(), 10.0f))
+			{
+				std::cout << "WIN" << std::endl;
+			}
+            RemoveCollidingObject(*it++);
+			continue;
+		}
 
 		// Flip direction upon collision
 		// Doesn't handle moving obj collision with stationary moving obj
@@ -164,6 +161,5 @@ void MovingGameObject::HandleMovingCollisions()
 
 		// The increment returns the previous value, which is the one to delete
 		RemoveCollidingObject(*it++);
-		std::cout << "HandleMovingCollisions: Loop, left: " << _movedLeft << ", up: " << _movedUp << "\n"; // DEBUG
 	}
 }

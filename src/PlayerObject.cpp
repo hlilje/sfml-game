@@ -10,7 +10,6 @@ PlayerObject::PlayerObject()
 
 	CenterOrigo();
 
-	// Inherited
 	_velocityX = 0.0f;
 	_velocityY = 0.0f;
 	_maxVelocity = 500.0f;
@@ -57,7 +56,6 @@ void PlayerObject::Update(float elapsedTime)
 		_velocityY = 0.0f;
 	}
 
-	// Protected inherited members of base class
 	LimitVelocity();
 	WallBounce();
 	HandleMovingCollisions();

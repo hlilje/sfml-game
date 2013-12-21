@@ -32,17 +32,15 @@ void GameObjectManager::Remove(std::string name)
 VisibleGameObject* GameObjectManager::Get(std::string name) const
 {
 	std::map<std::string, VisibleGameObject*>::const_iterator results = _gameObjects.find(name);
-	if(results == _gameObjects.end()) // Like EOF
+	if(results == _gameObjects.end())
 		return NULL;
-	return results->second; // Second item of pair
+	return results->second;
 }
 
-// Size wrapper
 int GameObjectManager::GetObjectCount() const
 {
 	return _gameObjects.size();
 }
-
 
 void GameObjectManager::DrawAll(sf::RenderWindow& renderWindow)
 {
@@ -50,14 +48,14 @@ void GameObjectManager::DrawAll(sf::RenderWindow& renderWindow)
 	while(itr != _gameObjects.end())
 	{
 		itr->second->Draw(renderWindow);
-		itr++; // A map can be reversed as well
+		itr++;
 	}
 }
 
 void GameObjectManager::UpdateAll()
 {
 	std::map<std::string, VisibleGameObject*>::const_iterator itr = _gameObjects.begin();
-	float timeDelta = clock.restart().asSeconds(); // Returns delta
+	float timeDelta = _clock.restart().asSeconds(); // Returns delta
 
 	while(itr != _gameObjects.end())
 	{
@@ -79,28 +77,24 @@ void GameObjectManager::CheckAllCollisions() {
 
 		while(subItr != _gameObjects.end())
 		{
-			if(subItr->second == obj1) // Compare pointers
+			if(subItr->second == obj1)
 			{
-				//std::cout << "CheckAllCollisions: Same obj\n"; // DEBUG
 				subItr++;
 				continue; // Continue since we didn't get obj2
 			}
 			else
 			{
-				//std::cout << "CheckAllCollisions: Assign obj2\n"; // DEBUG
 				obj2 = subItr->second;
 				subItr++;
 			}
 
-			if(_collDect->DetectCollision(obj1, obj2)) // See if they collide
+			if(_collDect->DetectCollision(obj1, obj2))
 			{
-				std::cout << "CheckAllCollisions: Collision!\n"; // DEBUG
 				obj1->AddCollidingObject(obj2);
 				obj2->AddCollidingObject(obj1);
 			}
 		}
 
-		//std::cout << "CheckAllCollisions: Reset subItr\n";
 		subItr = _gameObjects.begin(); // Start again for next object
 
 		itr++;

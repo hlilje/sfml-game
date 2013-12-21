@@ -28,7 +28,7 @@ public:
 
 private:
 	std::map<std::string, VisibleGameObject*> _gameObjects;
-	sf::Clock clock;
+	sf::Clock _clock;
 	CollisionDetector* _collDect;
 
 	// A functor, an object that can be called like a function

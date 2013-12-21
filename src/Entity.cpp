@@ -11,7 +11,6 @@ Entity::Entity():
 
 	CenterOrigo();
 
-	// Inherited
 	_velocityX = 400.0f; // px/s
 	_velocityY = 400.0f; // px/s
 	_maxVelocity = 400.0f;
@@ -33,19 +32,13 @@ void Entity::Update(float elapsedTime)
 	PlayerObject* player = dynamic_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
 	AIObject* ai = dynamic_cast<AIObject*>(Game::GetGameObjectManager().Get("AI"));
 
-	if(player != NULL) // Dangerous if null!
+	if(player != NULL)
 	{
-		sf::Rect<float> playerRect = player->GetBoundingRect();
-		if(playerRect.intersects(this->GetBoundingRect()))
-			std::cout << "Entity intersects player\n";
-
-		sf::Rect<float> aiRect = ai->GetBoundingRect();
-		if(aiRect.intersects(this->GetBoundingRect()))
-			std::cout << "Entity intersects AI\n";
-
-		LimitVelocity();
-		WallBounce();
-		HandleMovingCollisions();
-		MoveSprite(elapsedTime);
+        // TODO
 	}
+
+    LimitVelocity();
+    WallBounce();
+    HandleMovingCollisions();
+    MoveSprite(elapsedTime);
 }

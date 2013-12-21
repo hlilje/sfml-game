@@ -20,10 +20,8 @@ void Obstacle::Update(float elapsedTime)
 
 	if(player != NULL)
 	{
-		sf::Rect<float> playerRect = player->GetBoundingRect();
-		if(playerRect.intersects(this->GetBoundingRect()))
-			std::cout << "Obstacle intersects player\n";
+        // TODO
 	}
 
-	//HandleVisualCollisions(); // TODO
+	HandleVisualCollisions(); // TODO
 }

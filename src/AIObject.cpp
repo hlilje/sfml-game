@@ -10,7 +10,6 @@ AIObject::AIObject()
 
 	CenterOrigo();
 
-	// Inherited from base class
 	_velocityX = 0.0f;
 	_velocityY = 0.0f;
 	_maxVelocity = 400.0f;
@@ -54,7 +53,6 @@ void AIObject::Update(float elapsedTime)
 			_velocityY += velocityInc;
 		}
 
-		// Inherited from base class
 		LimitVelocity();
 		WallBounce();
 		HandleMovingCollisions();
