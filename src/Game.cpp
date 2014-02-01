@@ -138,6 +138,23 @@ void Game::ShowMenu()
 	}
 }
 
+void Game::SwitchLevel(Level::LevelID lvl)
+{
+	if (_gameState = Game::Playing)
+	{
+        Level level;
+        level.Switch(lvl);
+		_currentLevel = lvl;
+	}
+}
+
+void Game::Play()
+{
+	if (_gameState = Game::Playing)
+	{
+	}
+}
+
 const GameObjectManager& Game::GetGameObjectManager()
 {
 	return Game::_gameObjectManager;

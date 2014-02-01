@@ -121,19 +121,7 @@ void MovingGameObject::HandleMovingCollisions()
 		float thisUSide = thisRect.top;
 		float thisDSide = thisRect.top + thisRect.height;
 
-		if(dynamic_cast<GoalHole*> (*it) != NULL) // Victory condition
-		{
-			if (OnTarget((*it)->GetPosition(), 10.0f))
-			{
-				std::cout << "WIN" << std::endl;
-			}
-            RemoveCollidingObject(*it++);
-			continue;
-		}
-
 		// Flip direction upon collision
-		// Doesn't handle moving obj collision with stationary moving obj
-		// TODO
 		if(_movedLeft)
 		{
 			_velocityX = - _velocityX;
