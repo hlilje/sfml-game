@@ -29,7 +29,9 @@ void Game::Start(void)
 	ServiceLocator::RegisterServiceLocator(&soundProvider);
 	ServiceLocator::GetAudio()->PlaySong("audio/soundtrack.ogg", true);
 
-	// Also set start position
+	Level level;
+
+	// Set start positions
 	PlayerObject *player = new PlayerObject();
 	player->SetPosition(200.0f, 200.0f);
 
@@ -50,6 +52,8 @@ void Game::Start(void)
 	_gameObjectManager.Add("Entity", entity);
 	_gameObjectManager.Add("GoalHole", goalHole);
 	_gameObjectManager.Add("Obstacle1", obstacle1);
+
+	level.Load(Level::Level1);
 
 	_gameState= Game::ShowingSplash;
 
@@ -135,16 +139,6 @@ void Game::ShowMenu()
 	case MainMenu::Play:
 		_gameState = Game::Playing;
 		break;
-	}
-}
-
-void Game::SwitchLevel(Level::LevelID lvl)
-{
-	if (_gameState = Game::Playing)
-	{
-        Level level;
-        level.Switch(lvl);
-		_currentLevel = lvl;
 	}
 }
 

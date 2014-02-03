@@ -1,12 +1,25 @@
 #include "stdafx.h"
 #include "Level.h"
 
-void Level::Switch(Level::LevelID lvl)
-{
-
+Level::Level()
+{	
 }
 
-void Level::Show(sf::RenderWindow window)
+Level::~Level()
 {
+}
 
+bool Level::Load(Level::LevelID lvl)
+{
+	const PlayerObject* player = static_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
+	if (player == NULL)
+		return false;
+
+	switch (lvl)
+	{
+	case Level::Level1:
+		return true;
+	default:
+		return false;
+	}
 }

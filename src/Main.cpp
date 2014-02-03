@@ -1,6 +1,6 @@
 /*
 	Author: Hampus Liljekvist
-	Version: 2014-02-01
+	Version: PENDING
 
 	An SFML Game structurally based on the Game From Scratch tutorial at:
 		http://www.gamefromscratch.com/page/Game-From-Scratch-CPP-Edition.aspx

@@ -29,6 +29,16 @@ void GameObjectManager::Remove(std::string name)
 	}
 }
 
+void GameObjectManager::RemoveAll()
+{
+	std::map<std::string, VisibleGameObject*>::iterator it = _gameObjects.begin();
+	while(it != _gameObjects.end())
+	{
+		delete it->second;
+		_gameObjects.erase(it);
+	}
+}
+
 VisibleGameObject* GameObjectManager::Get(std::string name) const
 {
 	std::map<std::string, VisibleGameObject*>::const_iterator results = _gameObjects.find(name);

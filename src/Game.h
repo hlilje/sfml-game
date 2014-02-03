@@ -28,7 +28,6 @@ private:
 
 	static void ShowSplashScreen();
 	static void ShowMenu();
-	static void SwitchLevel(Level::LevelID lvl);
 	static void Play();
 
 	// The various states the game can be in
@@ -36,7 +35,6 @@ private:
 		Exiting };
 
 	static GameState _gameState;
-	static Level::LevelID _currentLevel;
 	static sf::RenderWindow _mainWindow;
 
 	static GameObjectManager _gameObjectManager;
