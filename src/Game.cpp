@@ -25,10 +25,8 @@ void Game::Start(void)
 	_mainWindow.setVerticalSyncEnabled(true);
 
 	SoundProvider soundProvider;
-
 	ServiceLocator::RegisterServiceLocator(&soundProvider);
 	ServiceLocator::GetAudio()->PlaySong("audio/soundtrack.ogg", true);
-
 	Level level;
 
 	// Set start positions
@@ -53,9 +51,10 @@ void Game::Start(void)
 	_gameObjectManager.Add("GoalHole", goalHole);
 	_gameObjectManager.Add("Obstacle1", obstacle1);
 
-	level.Load(Level::Level1);
+	if (!level.Load(Level::Level1)) // Abort if level load fails
+		_gameState = Game::Exiting;
 
-	_gameState= Game::ShowingSplash;
+	_gameState = Game::ShowingSplash;
 
 	while(!IsExiting())
 	{

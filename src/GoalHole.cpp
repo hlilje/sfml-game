@@ -18,8 +18,9 @@ void GoalHole::Update(float elapsedTime)
 {
 	PlayerObject* player = dynamic_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
 
-	if(player != NULL)
+	if (player != NULL)
 	{
-        // TODO
+		if (OnTarget(player->GetPosition(), 10.0f))
+			std::cout << "WIN" << std::endl;
 	}
 }
