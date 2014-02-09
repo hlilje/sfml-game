@@ -8,6 +8,7 @@ GoalHole::GoalHole()
 	assert(IsLoaded());
 
 	CenterOrigo();
+	SetNoClip(true);
 }
 
 GoalHole::~GoalHole()
@@ -21,6 +22,10 @@ void GoalHole::Update(float elapsedTime)
 	if (player != NULL)
 	{
 		if (OnTarget(player->GetPosition(), 10.0f))
+		{
 			std::cout << "WIN" << std::endl;
+		}
 	}
+
+	HandleVisualCollisions();
 }

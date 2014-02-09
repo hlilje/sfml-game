@@ -22,7 +22,7 @@ void SplashScreen::Show(sf::RenderWindow& renderWindow)
 		// All windows are responsible for their own event handling
 		while(renderWindow.pollEvent(event))
 		{
-			// Close the splash scren window upon any of these events
+			// Close the splash screen window upon any of these events
 			if(event.type == sf::Event::EventType::KeyPressed 
 				|| event.type == sf::Event::EventType::MouseButtonPressed
 				|| event.type == sf::Event::EventType::Closed )

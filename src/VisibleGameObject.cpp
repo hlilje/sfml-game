@@ -126,3 +126,13 @@ bool VisibleGameObject::OnTarget(sf::Vector2f target, float tolerance)
 
 	return false;
 }
+
+bool VisibleGameObject::IsNoClip() const
+{
+	return _noClip;
+}
+
+void VisibleGameObject::SetNoClip(bool noClip)
+{
+	_noClip = noClip;
+}

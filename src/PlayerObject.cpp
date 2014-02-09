@@ -9,6 +9,7 @@ PlayerObject::PlayerObject()
 	assert(IsLoaded()); // Can't return false in constructor
 
 	CenterOrigo();
+	SetNoClip(false);
 
 	_velocityX = 0.0f;
 	_velocityY = 0.0f;
@@ -55,15 +56,6 @@ void PlayerObject::Update(float elapsedTime)
 		_velocityX = 0.0f;
 		_velocityY = 0.0f;
 	}
-
-	//const GoalHole* goalHole = static_cast<GoalHole*>(Game::GetGameObjectManager().Get("GoalHole"));
- //   if(goalHole != NULL) // Victory condition
- //   {
- //       if (OnTarget(goalHole->GetPosition(), 10.0f))
- //       {
- //           std::cout << "WIN IN PLAYER" << std::endl;
- //       }
- //   }
 
 	LimitVelocity();
 	WallBounce();

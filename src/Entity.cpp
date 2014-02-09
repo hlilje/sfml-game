@@ -10,6 +10,7 @@ Entity::Entity():
 	assert(IsLoaded());
 
 	CenterOrigo();
+	SetNoClip(false);
 
 	_velocityX = 400.0f; // px/s
 	_velocityY = 400.0f; // px/s

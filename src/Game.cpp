@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "SplashScreen.h"
+#include "WinScreen.h"
 #include "SoundProvider.h"
 #include "ServiceLocator.h"
 
@@ -125,6 +126,13 @@ void Game::ShowSplashScreen()
 	_gameState = Game::ShowingMenu;
 }
 
+void Game::ShowWinScreen()
+{
+	WinScreen winScreen;
+	winScreen.Show(_mainWindow);
+	_gameState = Game::ShowingMenu;
+}
+
 // Handles progression between states
 void Game::ShowMenu()
 {
@@ -138,13 +146,6 @@ void Game::ShowMenu()
 	case MainMenu::Play:
 		_gameState = Game::Playing;
 		break;
-	}
-}
-
-void Game::Play()
-{
-	if (_gameState = Game::Playing)
-	{
 	}
 }
 

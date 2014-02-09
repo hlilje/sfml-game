@@ -27,12 +27,12 @@ private:
 	static void GameLoop();
 
 	static void ShowSplashScreen();
+	static void ShowWinScreen();
 	static void ShowMenu();
-	static void Play();
 
 	// The various states the game can be in
-	enum GameState { Uninitialized, ShowingSplash, Paused, ShowingMenu, Playing,
-		Exiting };
+	enum GameState { Uninitialized, ShowingSplash, ShowingWin, Paused,
+		ShowingMenu, Playing, Exiting };
 
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;

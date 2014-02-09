@@ -12,7 +12,6 @@ public:
 	virtual ~MovingGameObject(void); // Must be virtual!
 
 	// Gets you a pointer to an array containing the velocity
-	// TODO Why const?
 	virtual float* GetVelocity() const;
 
 protected:
@@ -25,7 +24,6 @@ protected:
 	float _movedUp;
 	float _movedDown;
 
-	// TODO Should these be virtual?
 	// Sets the velocity to max velocity were it to exceed it
 	virtual void LimitVelocity();
 	// Make the object change direction upon hitting walls

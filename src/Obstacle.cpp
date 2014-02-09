@@ -8,6 +8,7 @@ Obstacle::Obstacle()
 	assert(IsLoaded());
 
 	CenterOrigo();
+	SetNoClip(false);
 }
 
 Obstacle::~Obstacle()
@@ -23,5 +24,5 @@ void Obstacle::Update(float elapsedTime)
         // TODO
 	}
 
-	HandleVisualCollisions(); // TODO
+	HandleVisualCollisions();
 }

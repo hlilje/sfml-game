@@ -9,6 +9,7 @@ AIObject::AIObject()
 	assert(IsLoaded());
 
 	CenterOrigo();
+	SetNoClip(false);
 
 	_velocityX = 0.0f;
 	_velocityY = 0.0f;

@@ -20,6 +20,8 @@ public:
 	virtual float GetHeight() const;
 
 	virtual bool IsLoaded() const;
+	virtual bool IsNoClip() const;
+	virtual void SetNoClip(bool noClip);
 	// Returns a rectangle defining the size of the object, used for collision
 	// detection.
 	virtual sf::Rect<float> GetBoundingRect() const;
@@ -49,4 +51,5 @@ private:
 	sf::Texture _texture;
 	std::string _filename;
 	bool _isLoaded;
+	bool _noClip;
 };

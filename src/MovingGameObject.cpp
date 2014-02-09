@@ -103,6 +103,11 @@ void MovingGameObject::HandleMovingCollisions()
 	std::set<VisibleGameObject*>::iterator it = _collidesWith.begin();
 	while(it != _collidesWith.end())
 	{
+		if ((*it)->IsNoClip())
+		{
+            RemoveCollidingObject(*it++);
+			continue;
+		}
 		// Coordinate info needed to be able to reset the object when
 		// it overlaps the other
 		sf::Vector2f collPos = (*it)->GetPosition();
