@@ -86,6 +86,9 @@ void Game::GameLoop()
 	case Game::ShowingSplash:
 		ShowSplashScreen();
 		break;
+	case Game::ShowingWin:
+		ShowWinScreen();
+		break;
 	case Game::Playing:
 		// Check all events triggered since last iteration of the loop
 		// Returns true if there is one and assigns it to currentEvent

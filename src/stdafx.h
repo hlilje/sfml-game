@@ -20,3 +20,4 @@
 #include <iostream>
 #include <cassert>
 #include <list>
+#include <deque>

@@ -8,6 +8,7 @@
 #include "Obstacle.h"
 #include "GameObjectManager.h"
 #include "Level.h"
+#include "IntentManager.h"
 
 // This class is entirely static, but a dynamic RenderWindow is created
 // in GameLoop
@@ -38,4 +39,5 @@ private:
 	static sf::RenderWindow _mainWindow;
 
 	static GameObjectManager _gameObjectManager;
+	static IntentManager _intentManager;
 };
