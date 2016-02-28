@@ -1,7 +1,7 @@
+Debug/
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
-resource.h
 *.aps
-Debug/
+resource.h
 targetver.h
