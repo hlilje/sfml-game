@@ -1,45 +1,30 @@
-#include "stdafx.h"
-#include "Entity.h"
-#include "Game.h"
-#include "ServiceLocator.h"
+#include "stdafx.hpp"
+#include "entity.hpp"
+#include "game.hpp"
 
-Entity::Entity():
-	_elapsedTimeSinceStart(0.0f) // Time since entity was created
-{
-	Load("img/entity.png");
-	assert(IsLoaded());
 
-	CenterOrigo();
-	SetNoClip(false);
+Entity::Entity() :
+    MovingGameObject(400.0f, 400.0f, 400.0f),
+    _time_since_start(0.0f) {
+    Load("img/entity.png");
+    assert(IsLoaded());
 
-	_velocityX = 400.0f; // px/s
-	_velocityY = 400.0f; // px/s
-	_maxVelocity = 400.0f;
+    CenterOrigo();
+    SetNoClip(false);
 }
 
-Entity::~Entity()
-{
-}
+void Entity::Update(const float elapsed_time) {
+    _time_since_start += elapsed_time;
 
-void Entity::Update(float elapsedTime)
-{
-	_elapsedTimeSinceStart += elapsedTime;
+    const PlayerObject * const player = dynamic_cast<PlayerObject *>(Game::GetGameObjectManager().Get(GameObject::Player));
+    const AIObject * const     ai     = dynamic_cast<AIObject *>(Game::GetGameObjectManager().Get(GameObject::AI));
 
-	// Dynamic cast returns null if the object isn't capable of being casted to that type,
-	// otherwise returns a pointer to the object.
-	// Since Get() returns a VisibleGameObject pointer the cast is needed to get the members
-	// of the inheriting class.
-	// Overkill in this case since those methods aren't used.
-	PlayerObject* player = dynamic_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
-	AIObject* ai = dynamic_cast<AIObject*>(Game::GetGameObjectManager().Get("AI"));
-
-	if(player != NULL)
-	{
+    if (player) {
         // TODO
-	}
+    }
 
     LimitVelocity();
     WallBounce();
     HandleMovingCollisions();
-    MoveSprite(elapsedTime);
+    MoveSprite(elapsed_time);
 }

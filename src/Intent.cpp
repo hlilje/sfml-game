@@ -1,24 +1,19 @@
-#include "stdafx.h"
-#include "Intent.h"
+#include "stdafx.hpp"
+#include "intent.hpp"
 
-Intent::Intent(std::string message)
-{
-	_message = message;
+
+Intent::Intent(const IntentType type, const std::string & message) {
+    _message = message;
 }
 
-Intent::~Intent() { }
-
-void Intent::SetType(IntentType intent)
-{
-	_intent = intent;
+void Intent::SetType(const IntentType intent) {
+    _intent = intent;
 }
 
-Intent::IntentType Intent::GetType()
-{
-	return _intent;
+Intent::IntentType Intent::GetType() {
+    return _intent;
 }
 
-std::string Intent::GetIntentMessage()
-{
-	return _message;
+std::string Intent::GetIntentMessage() {
+    return _message;
 }

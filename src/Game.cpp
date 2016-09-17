@@ -1,165 +1,136 @@
-#include "stdafx.h"
-#include "Game.h"
-#include "MainMenu.h"
-#include "SplashScreen.h"
-#include "WinScreen.h"
-#include "SoundProvider.h"
-#include "ServiceLocator.h"
+#include "stdafx.hpp"
+#include "game.hpp"
+#include "main_menu.hpp"
+#include "service_locator.hpp"
+#include "sound_provider.hpp"
+#include "splash_screen.hpp"
+#include "win_screen.hpp"
 
-// Must be instanced manually due to being static.
-// C++ requires them to be instantiated in the global namespace.
-Game::GameState Game::_gameState = Uninitialized; // Since it has no constructor
-sf::RenderWindow Game::_mainWindow;
-GameObjectManager Game::_gameObjectManager;
+sf::RenderWindow  Game::_main_window;
+GameObjectManager Game::_game_object_manager;
+Game::GameState   Game::_game_state = Uninitialized;
 
-// Start function, never call this more than once
-void Game::Start(void)
-{
-	// Check to make sure we only call this function once
-	// No error is generated since the game exits immidiately
-	if(_gameState != Uninitialized)
-		return;
 
-	// Init RenderWindow, the same as calling create?
-	// Params: inner res + colour, title, optional style, optional OpenGL options
-	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "SFMLGame", sf::Style::Default);
-	_mainWindow.setVerticalSyncEnabled(true);
+void Game::Start() {
+    if (_game_state != Uninitialized)
+        return;
 
-	SoundProvider soundProvider;
-	ServiceLocator::RegisterServiceLocator(&soundProvider);
-	ServiceLocator::GetAudio()->PlaySong("audio/soundtrack.ogg", true);
-	Level level;
+    _main_window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "SFMLGame", sf::Style::Default);
+    _main_window.setVerticalSyncEnabled(true);
 
-	// Set start positions
-	PlayerObject *player = new PlayerObject();
-	player->SetPosition(200.0f, 200.0f);
+    SoundProvider sound_provider;
+    ServiceLocator::RegisterServiceLocator(&sound_provider);
+    ServiceLocator::GetAudio()->PlaySong("audio/soundtrack.ogg", true);
 
-	AIObject *ai = new AIObject();
-	ai->SetPosition(500.0f, 500.0f);
+    Level level;
 
-	Entity *entity = new Entity();
-	entity->SetPosition(Game::SCREEN_WIDTH - 300.0f, 100.0f);
+    if (!level.Load(Level::Level1))
+        _game_state = Game::Exiting;
 
-	GoalHole *goalHole = new GoalHole();
-	goalHole->SetPosition((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2));
+    PlayerObject * const player     = new PlayerObject();
+    AIObject * const     ai         = new AIObject();
+    Entity * const       entity     = new Entity();
+    GoalHole * const     goal_hole  = new GoalHole();
+    Obstacle * const     obstacle_1 = new Obstacle();
 
-	Obstacle *obstacle1 = new Obstacle();
-	obstacle1->SetPosition((SCREEN_WIDTH/2) + 300.0f, (SCREEN_HEIGHT/2) + 300.0f);
+    player->SetPosition(200.0f, 200.0f);
+    ai->SetPosition(500.0f, 500.0f);
+    entity->SetPosition(Game::SCREEN_WIDTH - 300.0f, 100.0f);
+    goal_hole->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    obstacle_1->SetPosition(SCREEN_WIDTH / 2 + 300.0f, SCREEN_HEIGHT / 2 + 300.0f);
 
-	_gameObjectManager.Add("Player", player);
-	_gameObjectManager.Add("AI", ai);
-	_gameObjectManager.Add("Entity", entity);
-	_gameObjectManager.Add("GoalHole", goalHole);
-	_gameObjectManager.Add("Obstacle1", obstacle1);
+    _game_object_manager.Add(GameObject::Player, player);
+    _game_object_manager.Add(GameObject::AI, ai);
+    _game_object_manager.Add(GameObject::Entity, entity);
+    _game_object_manager.Add(GameObject::GoalHole, goal_hole);
+    _game_object_manager.Add(GameObject::Obstacle_1, obstacle_1);
 
-	if (!level.Load(Level::Level1)) // Abort if level load fails
-		_gameState = Game::Exiting;
+    _game_state = Game::ShowingSplash;
 
-	_gameState = Game::ShowingSplash;
+    while (!IsExiting())
+        GameLoop();
 
-	while(!IsExiting())
-	{
-		GameLoop();
-	}
-
-	_mainWindow.close();
+    _main_window.close();
 }
 
-// Check if the game is in the exiting state.
-bool Game::IsExiting()
-{
-	if(_gameState == Game::Exiting) 
-		return true;
-	else 
-		return false;
+void Game::GameLoop() {
+    switch (_game_state) {
+    case Game::ShowingMenu:
+        ShowMenu();
+        break;
+    case Game::ShowingSplash:
+        ShowSplashScreen();
+        break;
+    case Game::ShowingWin:
+        ShowWinScreen();
+        break;
+    case Game::Playing:
+        sf::Event current_event;
+
+        _main_window.clear(sf::Color::Black);
+
+        _game_object_manager.UpdateAll();
+        _game_object_manager.CheckAllCollisions();
+        _game_object_manager.DrawAll(_main_window);
+
+        _main_window.display();
+
+        while (_main_window.pollEvent(current_event)) {
+            switch (current_event.type) {
+            case sf::Event::Closed:
+                _game_state = Game::Exiting;
+                break;
+            case sf::Event::KeyPressed:
+                if (current_event.key.code == sf::Keyboard::Escape)
+                    ShowMenu();
+                break;
+            default:
+                break;
+            }
+        }
+    }
 }
 
-// Main game loop.
-void Game::GameLoop()
-{
-	// The game is only ever in one single state at a time
-	switch(_gameState)
-	{
-	case Game::ShowingMenu:
-		ShowMenu();
-		break;
-	case Game::ShowingSplash:
-		ShowSplashScreen();
-		break;
-	case Game::ShowingWin:
-		ShowWinScreen();
-		break;
-	case Game::Playing:
-		// Check all events triggered since last iteration of the loop
-		// Returns true if there is one and assigns it to currentEvent
-		// Called in a while loop to iterate through the event queue
-		sf::Event currentEvent;
-
-		// The only good way to draw things is this cycle
-		_mainWindow.clear(sf::Color::Black); // Must be called before drawing
-
-		_gameObjectManager.UpdateAll();
-		_gameObjectManager.CheckAllCollisions();
-		_gameObjectManager.DrawAll(_mainWindow);
-
-		_mainWindow.display(); // End the current frame
-
-		while(_mainWindow.pollEvent(currentEvent))
-		{
-			switch (currentEvent.type)
-			{
-			case sf::Event::Closed:
-				_gameState = Game::Exiting;
-				break;
-			case sf::Event::KeyPressed:
-				if(currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
-				break;
-			default: // Don't handle other type of events
-				break;
-			}
-			break;
-		}
-	}
+bool Game::IsExiting() {
+    return _game_state == Game::Exiting;
 }
 
-void Game::ShowSplashScreen()
-{
-	SplashScreen splashScreen;
-	splashScreen.Show(_mainWindow);
-	_gameState = Game::ShowingMenu;
+void Game::ShowSplashScreen() {
+    SplashScreen splash_screen;
+    splash_screen.Show(_main_window);
+    _game_state = Game::ShowingMenu;
 }
 
-void Game::ShowWinScreen()
-{
-	WinScreen winScreen;
-	winScreen.Show(_mainWindow);
-	_gameState = Game::ShowingMenu;
+void Game::ShowMenu() {
+    MainMenu main_menu;
+    MainMenu::MenuResult result = main_menu.Show(_main_window);
+
+    switch (result) {
+    case MainMenu::Exit:
+        _game_state = Game::Exiting;
+        break;
+    case MainMenu::Play:
+        _game_state = Game::Playing;
+        break;
+    }
 }
 
-// Handles progression between states
-void Game::ShowMenu()
-{
-	MainMenu mainMenu;
-	MainMenu::MenuResult result = mainMenu.Show(_mainWindow);
-	switch(result)
-	{
-	case MainMenu::Exit:
-		_gameState = Game::Exiting;
-		break;
-	case MainMenu::Play:
-		_gameState = Game::Playing;
-		break;
-	}
+void Game::ShowWinScreen() {
+    WinScreen win_screen;
+    win_screen.Show(_main_window);
+    _game_state = Game::ShowingMenu;
 }
 
-const GameObjectManager& Game::GetGameObjectManager()
-{
-	return Game::_gameObjectManager;
+const sf::RenderWindow & Game::GetWindow() {
+    return Game::_main_window;
 }
 
-const sf::Event& Game::GetInput() 
-{
-	sf::Event currentEvent;
-	_mainWindow.pollEvent(currentEvent);
-	return currentEvent;
+const GameObjectManager & Game::GetGameObjectManager() {
+    return Game::_game_object_manager;
+}
+
+sf::Event Game::GetInput() {
+    sf::Event current_event;
+    _main_window.pollEvent(current_event);
+    return current_event;
 }

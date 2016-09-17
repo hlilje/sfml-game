@@ -1,48 +1,43 @@
-#include "stdafx.h"
-#include "Level.h"
+#include "stdafx.hpp"
+#include "level.hpp"
+#include "game.hpp"
 
-Level::Level()
-{	
-}
 
-Level::~Level()
-{
-}
-
-bool Level::Load(Level::LevelID lvl)
-{
-	PlayerObject* player = static_cast<PlayerObject*>(Game::GetGameObjectManager().Get("Player"));
-	AIObject* ai = static_cast<AIObject*>(Game::GetGameObjectManager().Get("AI"));
-	Entity* entity = static_cast<Entity*>(Game::GetGameObjectManager().Get("Entity"));
-	GoalHole* goalHole = static_cast<GoalHole*>(Game::GetGameObjectManager().Get("GoalHole"));
-	Obstacle* obstacle1 = static_cast<Obstacle*>(Game::GetGameObjectManager().Get("Obstacle1"));
-	if (player == NULL || ai == NULL  || entity == NULL || goalHole == NULL || obstacle1 == NULL)
+bool Level::Load(const Level::LevelID level) {
+    PlayerObject * const player = static_cast<PlayerObject *>(Game::GetGameObjectManager().Get(GameObject::Player));
+    AIObject * const ai         = static_cast<AIObject *>(Game::GetGameObjectManager().Get(GameObject::AI));
+    Entity * const entity       = static_cast<Entity *>(Game::GetGameObjectManager().Get(GameObject::Entity));
+    GoalHole * const goal_hole  = static_cast<GoalHole *>(Game::GetGameObjectManager().Get(GameObject::GoalHole));
+    Obstacle * const obstacle1  = static_cast<Obstacle *>(Game::GetGameObjectManager().Get(GameObject::Obstacle_1));
+    if (!(player && ai && entity && goal_hole && obstacle1))
         return false;
 
     int offset = 400;
-	float w = 0.0f;
-	float h = 0.0f;
-	switch (lvl)
-	{
-	case Level::Level1:
-		w = (float) ((std::rand() % (Game::SCREEN_WIDTH - offset)) + offset);
-		h = (float) ((std::rand() % (Game::SCREEN_HEIGHT - offset)) + offset);
-		player->SetPosition(w, h);
-		w = (float) ((std::rand() % (Game::SCREEN_WIDTH - offset)) + offset);
-		h = (float) ((std::rand() % (Game::SCREEN_HEIGHT - offset)) + offset);
-        ai->SetPosition(w, h);
-		w = (float) ((std::rand() % (Game::SCREEN_WIDTH - offset)) + offset);
-		h = (float) ((std::rand() % (Game::SCREEN_HEIGHT - offset)) + offset);
-		entity->SetPosition(w, h);
-		w = (float) ((std::rand() % (Game::SCREEN_WIDTH - offset)) + offset);
-		h = (float) ((std::rand() % (Game::SCREEN_HEIGHT - offset)) + offset);
-		goalHole->SetPosition(w, h);
-		w = (float) ((std::rand() % (Game::SCREEN_WIDTH - offset)) + offset);
-		h = (float) ((std::rand() % (Game::SCREEN_HEIGHT - offset)) + offset);
-		obstacle1->SetPosition(w, h);
+    int mod_w  = Game::SCREEN_WIDTH - offset;
+    int mod_h  = Game::SCREEN_HEIGHT - offset;
+    float w    = 0.0f;
+    float h    = 0.0f;
 
-		return true;
-	default:
-		return false;
-	}
+    switch (level) {
+    case Level::Level1:
+        w = (float) ((std::rand() % mod_w) + offset);
+        h = (float) ((std::rand() % mod_h) + offset);
+        player->SetPosition(w, h);
+        w = (float) ((std::rand() % mod_w) + offset);
+        h = (float) ((std::rand() % mod_h) + offset);
+        ai->SetPosition(w, h);
+        w = (float) ((std::rand() % mod_w) + offset);
+        h = (float) ((std::rand() % mod_h) + offset);
+        entity->SetPosition(w, h);
+        w = (float) ((std::rand() % mod_w) + offset);
+        h = (float) ((std::rand() % mod_h) + offset);
+        goal_hole->SetPosition(w, h);
+        w = (float) ((std::rand() % mod_w) + offset);
+        h = (float) ((std::rand() % mod_h) + offset);
+        obstacle1->SetPosition(w, h);
+
+        return true;
+    }
+
+    return false;
 }

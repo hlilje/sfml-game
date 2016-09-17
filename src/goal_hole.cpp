@@ -1,21 +1,22 @@
 #include "stdafx.hpp"
-#include "obstacle.hpp"
+#include "goal_hole.hpp"
 #include "game.hpp"
 
 
-Obstacle::Obstacle() {
+GoalHole::GoalHole() {
     Load("img/object.png");
     assert(IsLoaded());
 
     CenterOrigo();
-    SetNoClip(false);
+    SetNoClip(true);
 }
 
-void Obstacle::Update(const float elapsed_time) {
+void GoalHole::Update(const float elapsedTime) {
     const PlayerObject * const player = dynamic_cast<PlayerObject *>(Game::GetGameObjectManager().Get(GameObject::Player));
 
     if (player) {
-        // TODO
+        if (OnTarget(player->GetPosition(), 10.0f))
+            std::cout << "WIN" << std::endl;
     }
 
     HandleVisualCollisions();
